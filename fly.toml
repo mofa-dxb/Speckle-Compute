@@ -1,44 +1,50 @@
-# fly.toml file generated for compute-speckle on 2023-02-22T16:52:23Z
+# fly.toml app configuration file generated for speckle-compute-25 on 2025-03-01T11:38:15Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = 'compute-speckle'
-kill_signal = "SIGUSR1"
-kill_timeout = 300
-processes = []
-
-[build]
-  builtin = "python" 
-
-[build.settings]
-  pythonbase = "3.9-slim-buster"
-
-[env]
-  PORT = "8080"
+app = 'speckle-compute-25'
+primary_region = 'iad'
+kill_signal = 'SIGUSR1'
+kill_timeout = '5m0s'
 
 [experimental]
   auto_rollback = true
 
+[build]
+  builtin = 'python'
+
+  [build.settings]
+    pythonbase = '3.9-slim-buster'
+
+[env]
+  PORT = '8080'
+
 [[services]]
-  http_checks = []
+  protocol = 'tcp'
   internal_port = 8080
-  processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
+  processes = ['app']
+
+  [[services.ports]]
+    port = 80
+    handlers = ['http']
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
+
   [services.concurrency]
+    type = 'connections'
     hard_limit = 25
     soft_limit = 20
-    type = "connections"
-
-  [[services.ports]]
-    force_https = true
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
 
   [[services.tcp_checks]]
-    grace_period = "10s"
-    interval = "15s"
-    restart_limit = 0
-    timeout = "20s"
+    interval = '15s'
+    timeout = '20s'
+    grace_period = '10s'
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
