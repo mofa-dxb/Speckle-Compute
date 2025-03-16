@@ -1,50 +1,22 @@
-# fly.toml app configuration file generated for speckle-compute-25-white-meadow-9939 on 2025-03-04T10:57:29Z
+# fly.toml app configuration file generated for speckle-compute-late-bird-1156 on 2025-03-16T23:44:30+04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'speckle-compute-25'
-primary_region = 'iad'
-kill_signal = 'SIGUSR1'
-kill_timeout = '5m0s'
-
-[experimental]
-  auto_rollback = true
+app = 'speckle-compute-late-bird-1156'
+primary_region = 'bom'
 
 [build]
-  builtin = 'python'
 
-  [build.settings]
-    pythonbase = '3.9-slim-buster'
-
-[env]
-  PORT = '8080'
-
-[[services]]
-  protocol = 'tcp'
+[http_service]
   internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
   processes = ['app']
 
-  [[services.ports]]
-    port = 80
-    handlers = ['http']
-    force_https = true
-
-  [[services.ports]]
-    port = 443
-    handlers = ['tls', 'http']
-
-  [services.concurrency]
-    type = 'connections'
-    hard_limit = 25
-    soft_limit = 20
-
-  [[services.tcp_checks]]
-    interval = '15s'
-    timeout = '20s'
-    grace_period = '10s'
-
 [[vm]]
-  memory = '256mb'
+  memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
