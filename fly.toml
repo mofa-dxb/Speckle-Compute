@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for speckle-compute-late-bird-1156 on 2025-03-16T23:44:30+04:00
+# fly.toml app configuration file generated for speckle-compute-nameless-river-3008 on 2025-03-21T20:58:35+04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'speckle-compute-late-bird-1156'
-primary_region = 'bom'
+app = 'speckle-compute-nameless-river-3008'
+primary_region = 'ams'
 
 [build]
 
